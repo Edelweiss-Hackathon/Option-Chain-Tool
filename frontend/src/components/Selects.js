@@ -1,16 +1,15 @@
 import React from "react";
-
 const Selects = () => {
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-4 sm:mt-20">
+    <div className="bg-gridGray">
+      <div className="grid grid-cols-3 gap-4 sm:mt-16 sm:p-5">
         <div className="sm:ml-10">
-          <label
+          {/* <label
             for="countries"
             class="block mb-2 text-sm font-xl text-gray-900 dark:text-black"
           >
             Select Symbol
-          </label>
+          </label> */}
           <select
             id="countries"
             class="bg-gray-50 border border-gray-460 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/2 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -23,12 +22,12 @@ const Selects = () => {
           </select>
         </div>
         <div className="sm:ml-10">
-          <label
+          {/* <label
             for="countries"
             class="block mb-2 text-sm font-xl text-gray-900 dark:text-black"
           >
             Expiry Date
-          </label>
+          </label> */}
           <select
             id="countries"
             class="bg-gray-50 border border-gray-460 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/2 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -41,12 +40,12 @@ const Selects = () => {
           </select>
         </div>
         <div className="sm:ml-10">
-          <label
+          {/* <label
             for="countries"
             class="block mb-2 text-sm font-xl text-gray-900 dark:text-black"
           >
             Strike Price
-          </label>
+          </label> */}
           <select
             id="countries"
             class="bg-gray-50 border border-gray-460 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3/2 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"

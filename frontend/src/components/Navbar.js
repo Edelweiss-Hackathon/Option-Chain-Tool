@@ -1,5 +1,4 @@
 import React from "react";
-import Selects from "./Selects";
 
 const Navbar = () => {
   return (
