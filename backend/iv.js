@@ -1,11 +1,13 @@
+const { TTM_Calc } = require("./ttm");
+
 function calculateOptionPrice(spot_price, strike_price, interest, volatility, expiry, optionType) {
   // As per formula
   const d1 = (Math.log(spot_price / strike_price) + (interest + (volatility ** 2) / 2) * expiry) / (volatility * Math.sqrt(expiry));
   const d2 = d1 - volatility * Math.sqrt(expiry);
 
-  if (optionType === 'call') {
+  if (optionType === 'CE') {
     return spot_price * Normal_distribution(d1) - strike_price * Math.exp(-interest * expiry) * Normal_distribution(d2);
-  } else if (optionType === 'put') {
+  } else if (optionType === 'PE') {
     return strike_price * Math.exp(-interest * expiry) * Normal_distribution(-d2) - spot_price * Normal_distribution(-d1);
   } else {
     return 0;
@@ -74,8 +76,9 @@ const option_price = 57.35; // Option price (Last traded price/LTP)
 const spot_price = 19359.00; // Spot price or underlying price
 const strike_price = 19350.00; // Strike price
 const interest = 0.05; // Risk-free interest rate
-const expiry = 3 / 365; // Time to expiration in years 
-const optionType = 'call'; // Option type ('call' or 'put')
+const expiryDate = ''
+const expiry = TTM_Calc(expiryDate) / 365; // Time to expiration in years 
+const optionType = 'CE'; // Option type ('call' or 'put')
 
 const impliedVolatility = calculateImpliedVolatility(option_price, spot_price, strike_price, interest, expiry, optionType);
 console.log("Implied Volatility:", impliedVolatility * 100);
