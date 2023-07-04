@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import SearchSection from "./SearchSection";
+import IndexValue from "./IndexValue";
 
 const DataTable = ({ optionData }) => {
   const [selectedValue, setSelectedValue] = useState("MAINIDX");
@@ -48,7 +49,7 @@ const DataTable = ({ optionData }) => {
   return (
     <div>
       <SearchSection value={selectedValue} onChange={handleSelectChange} />
-      {underlyingIndex && (
+      {/* {underlyingIndex && (
         <div
           style={{
             display: "flex",
@@ -60,7 +61,11 @@ const DataTable = ({ optionData }) => {
           <p style={{ fontWeight: "bold" }}>{selectedValue}</p>
           <p style={{ fontWeight: "bold" }}>{underlyingIndex}</p>
         </div>
-      )}
+      )} */}
+      <IndexValue
+        underlyingIndex={underlyingIndex}
+        selectedValue={selectedValue}
+      />
       <div id='container'>
         <div id='lower'>
           <div class='left-div'>
