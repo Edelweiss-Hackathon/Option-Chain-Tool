@@ -1,5 +1,5 @@
 
-# MoneyFlow
+# StockOptionAnalyzer
 
 Our MoneyFlow webpage is a realtime and responsive webpage that displays the Options prices of CALL and PUT for several Strike Prices and calculates the IV and Expiration time as well for the same. The data received after execution of JAR file is received via socket programming and then processed upon further by the backend and then relayed to the frontend over realtime.
 
