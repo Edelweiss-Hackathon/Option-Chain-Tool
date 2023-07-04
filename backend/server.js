@@ -1,8 +1,9 @@
 const express = require("express");
 const net = require("net");
-const calculateImpliedVolatility = require("./iv");
+const { calculateImpliedVolatility } = require("./utils/iv");
 const { getStockDetails, checkUnderlying } = require("./utils/helperFunctions");
 const { LocalStorage } = require("node-localstorage");
+const { TTM_Calc } = require("./utils/ttm");
 const localStorage = new LocalStorage("./localStorage");
 
 const app = express();
@@ -40,8 +41,10 @@ io.on("connection", (socket) => {
 
       if (
         !symbolName.includes("�") ||
+        !symbolName.includes("%") ||
         !symbolName.includes("~") ||
-        !symbolName.endsWith("XX")
+        !symbolName.endsWith("X") ||
+        !symbolName.endsWith(".")
       ) {
         //check if underlying hai ya PE CE
         let isUnderlying = checkUnderlying(symbolName);
@@ -67,17 +70,22 @@ io.on("connection", (socket) => {
             );
           } else {
             //
-            let obj = {
-              lastTradedPrice: ltp,
-            };
-            localStorage.setItem(
-              symbolName,
-              JSON.stringify(
-                obj,
-                (key, value) =>
-                  typeof value === "bigint" ? value.toString() : value // return everything else unchanged
-              )
-            );
+            try {
+            } catch (err) {
+              if (!symbolName.includes(".")) {
+                let obj = {
+                  lastTradedPrice: ltp,
+                };
+                localStorage.setItem(
+                  symbolName,
+                  JSON.stringify(
+                    obj,
+                    (key, value) =>
+                      typeof value === "bigint" ? value.toString() : value // return everything else unchanged
+                  )
+                );
+              }
+            }
           }
         } else {
           //PE CE
@@ -88,15 +96,47 @@ io.on("connection", (socket) => {
           let underlyingIndexLTP = underlyingIndex?.lastTradedPrice;
           console.log(option_name, underlyingIndexLTP);
 
-          //calculate iv
-          //let iv = calculateImpliedVolatility();
+          var monthAbbreviations = {
+            JAN: 0,
+            FEB: 1,
+            MAR: 2,
+            APR: 3,
+            MAY: 4,
+            JUN: 5,
+            JUL: 6,
+            AUG: 7,
+            SEP: 8,
+            OCT: 9,
+            NOV: 10,
+            DEC: 11,
+          };
+          var expiryDate = new Date();
+
+          console.log(day, month, year);
+
+          expiryDate.setFullYear(Number(`${20}${year}`));
+          expiryDate.setMonth(monthAbbreviations[month]);
+          expiryDate.setDate(Number(day));
+
+          // calculate iv
+          let iv = calculateImpliedVolatility(
+            buff.readBigInt64LE(50) / BigInt(100),
+            underlyingIndexLTP,
+            value,
+            0.05,
+            (TTM_Calc(expiryDate) / 365).toFixed(2),
+            type
+          );
+
+          console.log("IV", (iv * 100).toFixed(2));
 
           stockData = {
             packetLength: buff.readInt32LE(0),
             symbolName: option_name,
             strikePrice: value,
             type,
-            expiryDate: new Date(day + "/" + month + "/" + year),
+            iv: (iv * 100).toFixed(2),
+            expiryDate: expiryDate,
             SequenceNumber: buff.readBigInt64LE(34),
             Timestamp: new Date(
               parseInt(buff.readBigInt64LE(42))

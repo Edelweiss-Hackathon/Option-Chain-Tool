@@ -11,6 +11,8 @@ const DataTable = ({ optionData }) => {
     selectedData?.call[selectedData?.call.length - 1]?.underlyingIndexLTP;
   let moneyFlow = true;
 
+  // console.log("hello");
+
   // Function to handle select option change
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
@@ -92,16 +94,26 @@ const DataTable = ({ optionData }) => {
                       );
                     }
 
-                    atm = previousDifference < currentDifference;
+                    if (moneyFlow) {
+                      atm = previousDifference >= currentDifference;
+                      if (!atm) {
+                        moneyFlow = false;
+                      }
+                    }
 
                     return (
                       <tr
                         key={index}
-                        style={{ backgroundColor: atm ? "white" : "grey" }}>
+                        style={{
+                          backgroundColor:
+                            moneyFlow && selectedData.call.length > 1
+                              ? "grey"
+                              : "white",
+                        }}>
                         <td>{item?.openInterest}</td>
                         <td>-</td>
                         <td>{item.volume}</td>
-                        <td>-</td>
+                        <td>{item?.iv ? item.iv : 0}</td>
                         <td>{item?.lastTradedPrice}</td>
                         <td>-</td>
                         <td>{item?.bidQty}</td>
@@ -144,7 +156,7 @@ const DataTable = ({ optionData }) => {
                       <td>{item?.openInterest}</td>
                       <td>-</td>
                       <td>{item.volume}</td>
-                      <td>-</td>
+                      <td>{item?.iv ? item.iv : 0}</td>
                       <td>{item?.lastTradedPrice}</td>
                       <td>-</td>
                       <td>{item?.bidQty}</td>
