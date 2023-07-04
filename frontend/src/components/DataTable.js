@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "../App.css";
+import SearchSection from "./SearchSection";
 
 const DataTable = ({ optionData }) => {
   const [selectedValue, setSelectedValue] = useState("MAINIDX");
@@ -12,14 +13,23 @@ const DataTable = ({ optionData }) => {
 
   let underlyingIndex =
     selectedData?.call[selectedData?.call.length - 1]?.underlyingIndexLTP;
+
+  if (!underlyingIndex) {
+    underlyingIndex =
+      selectedData?.put[selectedData?.put.length - 1]?.underlyingIndexLTP;
+  }
+
   let moneyFlowCall = true;
   let moneyFlowPut = true;
+
+  useEffect(() => {
+    handleSelectChange(selectedValue);
+  }, [optionData]);
 
   // console.log("hello");
 
   // Function to handle select option change
-  const handleSelectChange = (event) => {
-    const selectedValue = event.target.value;
+  const handleSelectChange = (selectedValue) => {
     setSelectedValue(selectedValue);
 
     // Find the selected object in the array
@@ -37,28 +47,20 @@ const DataTable = ({ optionData }) => {
 
   return (
     <div>
-      <select value={selectedValue} onChange={handleSelectChange}>
-        <option key={"MAINIDX"} value={"MAINIDX"}>
-          MAINIDX
-        </option>
-        <option key={"ALLBANKS"} value={"ALLBANKS"}>
-          ALLBANKS
-        </option>
-        <option key={"MIDCAPS"} value={"MIDCAPS"}>
-          MIDCAPS
-        </option>
-        <option key={"FINANCIALS"} value={"FINANCIALS"}>
-          FINANCIALS
-        </option>
-      </select>
-
-      <h2>
-        {selectedData?.call[selectedData?.call.length - 1]?.underlyingIndexLTP}
-      </h2>
-      <h2>
-        {selectedData?.put[[selectedData?.put.length - 1]]?.underlyingIndexLTP}
-      </h2>
-
+      <SearchSection value={selectedValue} onChange={handleSelectChange} />
+      {underlyingIndex && (
+        <div
+          style={{
+            display: "flex",
+            padding: "0 2rem 1rem 2.8rem",
+            gap: "0.5rem",
+            fontSize: "1.5rem",
+          }}>
+          <p>Underlying Index:</p>
+          <p style={{ fontWeight: "bold" }}>{selectedValue}</p>
+          <p style={{ fontWeight: "bold" }}>{underlyingIndex}</p>
+        </div>
+      )}
       <div id='container'>
         <div id='lower'>
           <div class='left-div'>
@@ -213,7 +215,7 @@ const DataTable = ({ optionData }) => {
                         key={index}
                         style={{
                           backgroundColor:
-                            moneyFlowPut && selectedData.put.length > 1
+                            moneyFlowPut && selectedData.put.length > 2
                               ? "white"
                               : "#f1eed9",
                         }}>

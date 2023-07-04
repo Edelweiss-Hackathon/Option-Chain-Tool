@@ -59,6 +59,7 @@ io.on("connection", (socket) => {
             //if not then create
             let obj = {
               lastTradedPrice: ltp,
+              updatedAt: new Date(),
             };
             localStorage.setItem(
               symbolName,
@@ -75,6 +76,7 @@ io.on("connection", (socket) => {
               if (!symbolName.includes(".")) {
                 let obj = {
                   lastTradedPrice: ltp,
+                  updatedAt: new Date(),
                 };
                 localStorage.setItem(
                   symbolName,
