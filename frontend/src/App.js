@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import io from "socket.io-client";
 import DataTable from "./DataTable";
+import Navbar from "./components/Navbar";
+//import Selects from "./components/Selects";
 
 const ENDPOINT = "http://localhost:5000/";
 var socket;
@@ -76,7 +78,8 @@ function App() {
   }, []);
 
   return (
-    <div className='App'>
+    <div className="App">
+      <Navbar />
       <DataTable optionData={stockData} />
     </div>
   );
