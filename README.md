@@ -73,10 +73,6 @@ Unzip database.zip file before running the following command
   java -Ddebug=true -Dspeed=2.0 -classpath feed-play-1.0.jar hackathon.player.Main dataset.csv 9011
 ```
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
 ## Authors
 
 - [@Aryan Parekh](https://github.com/Aryan-29)
