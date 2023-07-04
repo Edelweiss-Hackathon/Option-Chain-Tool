@@ -92,7 +92,7 @@ Run the JAR file
 
 ## Feedback
 
-If you have any feedback, please reach out to us at bhavyasura12@gmail.com
+If you have any feedback, please reach out to us at aryan.parekh@somaiya.edu
 
 
 ## Screenshots
