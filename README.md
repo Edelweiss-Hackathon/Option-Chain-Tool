@@ -75,7 +75,7 @@ Run the JAR file
 ```
 
 ```bash
-  java -Ddebug=true -Dspeed=2.0 -classpath ./resources/feed-play-1.0.jar hackathon.player.Main ./resources/dataset.csv 9011
+  java -Ddebug=true -Dspeed=2.0 -classpath feed-play-1.0.jar hackathon.player.Main dataset.csv 9011
 ```
 
 ## License
