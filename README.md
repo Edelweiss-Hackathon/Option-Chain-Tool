@@ -92,7 +92,10 @@ If you have any feedback, please reach out to us at aryan.parekh@somaiya.edu
 
 ## Screenshots
 
-![Screen](https://github.com/Edelweiss-Hackathon/Option-Chain-Tool/blob/master/resources/Screen1.PNG)
+![Screen2](https://github.com/Edelweiss-Hackathon/Option-Chain-Tool/blob/master/resources/Screen2.png)
+
+![Screen1](https://github.com/Edelweiss-Hackathon/Option-Chain-Tool/blob/master/resources/Screen1.PNG)
+
 ## Demo
 
 Link for Demo Video
