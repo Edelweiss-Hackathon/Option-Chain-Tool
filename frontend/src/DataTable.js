@@ -5,11 +5,15 @@ const DataTable = ({ optionData }) => {
   const [selectedValue, setSelectedValue] = useState("MAINIDX");
   const [selectedData, setSelectedData] = useState({ call: [], put: [] });
 
-  let previousDifference = Number.MAX_SAFE_INTEGER;
-  let currentDifference = 0;
+  let previousDifferenceCall = Number.MAX_SAFE_INTEGER;
+  let currentDifferenceCall = 0;
+  let previousDifferencePut = Number.MAX_SAFE_INTEGER;
+  let currentDifferencePut = 0;
+
   let underlyingIndex =
     selectedData?.call[selectedData?.call.length - 1]?.underlyingIndexLTP;
-  let moneyFlow = true;
+  let moneyFlowCall = true;
+  let moneyFlowPut = true;
 
   // console.log("hello");
 
@@ -40,8 +44,8 @@ const DataTable = ({ optionData }) => {
         <option key={"ALLBANKS"} value={"ALLBANKS"}>
           ALLBANKS
         </option>
-        <option key={"MIDCAP"} value={"MIDCAP"}>
-          MIDCAP
+        <option key={"MIDCAPS"} value={"MIDCAPS"}>
+          MIDCAPS
         </option>
         <option key={"FINANCIALS"} value={"FINANCIALS"}>
           FINANCIALS
@@ -82,22 +86,36 @@ const DataTable = ({ optionData }) => {
 
                   {selectedData.call.map((item, index) => {
                     let atm = null;
+                    let chng = (
+                      (item?.lastTradedPrice - item.previousClosePrice) /
+                      item.previousClosePrice
+                    ).toFixed(2);
+                    let chngInOI = (
+                      (item?.openInterest - item?.previousOpenInterest) /
+                      item?.previousOpenInterest
+                    ).toFixed(2);
+
+                    if (!isFinite(chng)) chng = 0;
+                    if (isNaN(chng)) chng = 0;
+                    if (!isFinite(chngInOI)) chngInOI = 0;
+                    if (isNaN(chngInOI)) chngInOI = 0;
+
                     if (index === 0) {
-                      previousDifference = Number.MAX_SAFE_INTEGER;
-                      currentDifference = Math.abs(
+                      previousDifferenceCall = Number.MAX_SAFE_INTEGER;
+                      currentDifferenceCall = Math.abs(
                         underlyingIndex - item.strikePrice
                       );
                     } else {
-                      previousDifference = currentDifference;
-                      currentDifference = Math.abs(
+                      previousDifferenceCall = currentDifferenceCall;
+                      currentDifferenceCall = Math.abs(
                         underlyingIndex - item.strikePrice
                       );
                     }
 
-                    if (moneyFlow) {
-                      atm = previousDifference >= currentDifference;
+                    if (moneyFlowCall) {
+                      atm = previousDifferenceCall >= currentDifferenceCall;
                       if (!atm) {
-                        moneyFlow = false;
+                        moneyFlowCall = false;
                       }
                     }
 
@@ -106,16 +124,18 @@ const DataTable = ({ optionData }) => {
                         key={index}
                         style={{
                           backgroundColor:
-                            moneyFlow && selectedData.call.length > 1
-                              ? "grey"
+                            moneyFlowCall && selectedData.call.length > 1
+                              ? "#f1eed9"
                               : "white",
                         }}>
                         <td>{item?.openInterest}</td>
-                        <td>-</td>
+                        <td>{chngInOI}</td>
                         <td>{item.volume}</td>
                         <td>{item?.iv ? item.iv : 0}</td>
                         <td>{item?.lastTradedPrice}</td>
-                        <td>-</td>
+                        <td style={{ color: chng < 0 ? "red" : "green" }}>
+                          {chng ? chng : 0}
+                        </td>
                         <td>{item?.bidQty}</td>
                         <td>{item?.bidPrice}</td>
                         <td>{item?.askPrice}</td>
@@ -132,12 +152,12 @@ const DataTable = ({ optionData }) => {
             <main class='table'>
               <section class='table__body'>
                 <table id='optionsTable1'>
-                  <tr>
-                    <th colspan='11' class='th' style={{ textAlign: "center" }}>
-                      PUTS
-                    </th>
-                  </tr>
+                  <th colspan='11' class='th' style={{ textAlign: "center" }}>
+                    PUTS
+                  </th>
+                  <tr></tr>
                   <tr class='th'>
+                    <th class='th'>STRIKE PRICE</th>
                     <th>OI</th>
                     <th>CHNG IN OI</th>
                     <th>VOLUME</th>
@@ -148,24 +168,71 @@ const DataTable = ({ optionData }) => {
                     <th>BID</th>
                     <th>ASK</th>
                     <th>ASK QTY</th>
-                    <th class='th'>STRIKE PRICE</th>
                   </tr>
 
-                  {selectedData.put.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item?.openInterest}</td>
-                      <td>-</td>
-                      <td>{item.volume}</td>
-                      <td>{item?.iv ? item.iv : 0}</td>
-                      <td>{item?.lastTradedPrice}</td>
-                      <td>-</td>
-                      <td>{item?.bidQty}</td>
-                      <td>{item?.bidPrice}</td>
-                      <td>{item?.askPrice}</td>
-                      <td>{item?.askQty}</td>
-                      <td>{item?.strikePrice}</td>
-                    </tr>
-                  ))}
+                  {selectedData.put.map((item, index) => {
+                    let atm = null;
+                    let chng = (
+                      (item?.lastTradedPrice - item.previousClosePrice) /
+                      item.previousClosePrice
+                    ).toFixed(2);
+
+                    let chngInOI = (
+                      (item?.openInterest - item?.previousOpenInterest) /
+                      item?.previousOpenInterest
+                    ).toFixed(2);
+
+                    if (!isFinite(chng)) chng = 0;
+                    if (isNaN(chng)) chng = 0;
+                    if (!isFinite(chngInOI)) chngInOI = 0;
+                    if (isNaN(chngInOI)) chngInOI = 0;
+
+                    if (index === 0) {
+                      previousDifferencePut = Number.MAX_SAFE_INTEGER;
+                      currentDifferencePut = Math.abs(
+                        underlyingIndex - item.strikePrice
+                      );
+                    } else {
+                      previousDifferencePut = currentDifferencePut;
+                      currentDifferencePut = Math.abs(
+                        underlyingIndex - item.strikePrice
+                      );
+                    }
+
+                    if (moneyFlowPut) {
+                      atm = previousDifferencePut >= currentDifferencePut;
+                      if (!atm) {
+                        moneyFlowPut = false;
+                      }
+                    }
+
+                    if (!isFinite(chng)) chng = 0;
+
+                    return (
+                      <tr
+                        key={index}
+                        style={{
+                          backgroundColor:
+                            moneyFlowPut && selectedData.put.length > 1
+                              ? "white"
+                              : "#f1eed9",
+                        }}>
+                        <td>{item?.strikePrice}</td>
+                        <td>{item?.openInterest}</td>
+                        <td>{chngInOI}</td>
+                        <td>{item.volume}</td>
+                        <td>{item?.iv ? item.iv : 0}</td>
+                        <td>{item?.lastTradedPrice}</td>
+                        <td style={{ color: chng < 0 ? "red" : "green" }}>
+                          {chng ? chng : 0}
+                        </td>
+                        <td>{item?.bidQty}</td>
+                        <td>{item?.bidPrice}</td>
+                        <td>{item?.askPrice}</td>
+                        <td>{item?.askQty}</td>
+                      </tr>
+                    );
+                  })}
                 </table>
               </section>
             </main>
