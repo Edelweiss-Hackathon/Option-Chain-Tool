@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import io from "socket.io-client";
-import DataTable from "./components/DataTable";
+import MainSection from "./components/MainSection";
 import Navbar from "./components/Navbar";
 //import Selects from "./components/Selects";
 
@@ -80,7 +80,7 @@ function App() {
   return (
     <div className='App'>
       <Navbar />
-      <DataTable optionData={stockData} />
+      <MainSection optionData={stockData} />
     </div>
   );
 }

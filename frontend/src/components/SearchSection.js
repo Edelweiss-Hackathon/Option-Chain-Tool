@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import "../App.css";
 
 const selectStyles = (open) => ({
   singleValue: (provided) => ({ ...provided, color: "#666" }),
