@@ -1,29 +1,29 @@
 .container {
-    width: auto;
-    margin-left: auto;
-    margin-right: auto;
-    height: 200px;
-
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  height: 200px;
 }
 
 /* #0a2351 */
 .main-header {
-    background-color: #0C134F;
-    /* height: 50px; */
-    text-align: left;
-    display: flex;
-    padding: 1rem 2rem;
-
+  background-color: #0c134f;
+  /* height: 50px; */
+  text-align: left;
+  display: flex;
+  padding: 1rem 2rem;
+  align-items: center;
 }
 
 .image {
-    height: 35px;
-    margin-left: 15px;
-    margin-top: 7px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: 7px;
 }
 
 .title {
-    margin-top: 10px;
-    margin-left: 10px;
-    color: white;
+  margin-top: 10px;
+  margin-left: 10px;
+  color: white;
+  font-size: 2rem;
 }

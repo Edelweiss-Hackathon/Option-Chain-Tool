@@ -15,6 +15,10 @@ const CallTable = ({ selectedData }) => {
 
   let moneyFlowCall = true;
 
+  function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return (
     <div class='left-div'>
       <main class='table'>
@@ -83,19 +87,19 @@ const CallTable = ({ selectedData }) => {
                         ? "#f1eed9"
                         : "white",
                   }}>
-                  <td>{item?.openInterest}</td>
-                  <td>{chngInOI}</td>
-                  <td>{item.volume}</td>
-                  <td>{item?.iv ? item.iv : 0}</td>
-                  <td>{item?.lastTradedPrice}</td>
+                  <td>{numberWithCommas(item?.openInterest)}</td>
+                  <td>{numberWithCommas(chngInOI)}</td>
+                  <td>{numberWithCommas(item.volume)}</td>
+                  <td>{numberWithCommas(item?.iv ? item.iv : 0)}</td>
+                  <td>{numberWithCommas(item?.lastTradedPrice)}</td>
                   <td style={{ color: chng < 0 ? "red" : "green" }}>
                     {chng ? chng : 0}
                   </td>
-                  <td>{item?.bidQty}</td>
-                  <td>{item?.bidPrice}</td>
-                  <td>{item?.askPrice}</td>
-                  <td>{item?.askQty}</td>
-                  <td>{item?.strikePrice}</td>
+                  <td>{numberWithCommas(item?.bidQty)}</td>
+                  <td>{numberWithCommas(item?.bidPrice)}</td>
+                  <td>{numberWithCommas(item?.askPrice)}</td>
+                  <td>{numberWithCommas(item?.askQty)}</td>
+                  <td>{numberWithCommas(item?.strikePrice)}</td>
                 </tr>
               );
             })}
