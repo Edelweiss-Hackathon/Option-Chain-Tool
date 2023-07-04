@@ -14,6 +14,10 @@ const PutTable = ({ selectedData }) => {
 
   let moneyFlowPut = true;
 
+  function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return (
     <div class='right-div'>
       <main class='table'>
@@ -25,16 +29,16 @@ const PutTable = ({ selectedData }) => {
             <tr></tr>
             <tr class='th'>
               <th class='th'>STRIKE PRICE</th>
-              <th>OI</th>
-              <th>CHNG IN OI</th>
-              <th>VOLUME</th>
-              <th>IV</th>
-              <th>LTP</th>
-              <th>CHNG</th>
               <th>BID QTY</th>
               <th>BID</th>
               <th>ASK</th>
               <th>ASK QTY</th>
+              <th>CHNG</th>
+              <th>LTP</th>
+              <th>IV</th>
+              <th>VOLUME</th>
+              <th>CHNG IN OI</th>
+              <th>OI</th>
             </tr>
 
             {selectedData.put.map((item, index) => {
@@ -84,19 +88,19 @@ const PutTable = ({ selectedData }) => {
                         ? "white"
                         : "#f1eed9",
                   }}>
-                  <td>{item?.strikePrice}</td>
-                  <td>{item?.openInterest}</td>
-                  <td>{chngInOI}</td>
-                  <td>{item.volume}</td>
-                  <td>{item?.iv ? item.iv : 0}</td>
-                  <td>{item?.lastTradedPrice}</td>
+                  <td>{numberWithCommas(item?.strikePrice)}</td>
+                  <td>{numberWithCommas(item?.bidQty)}</td>
+                  <td>{numberWithCommas(item?.bidPrice)}</td>
+                  <td>{numberWithCommas(item?.askPrice)}</td>
+                  <td>{numberWithCommas(item?.askQty)}</td>
                   <td style={{ color: chng < 0 ? "red" : "green" }}>
                     {chng ? chng : 0}
                   </td>
-                  <td>{item?.bidQty}</td>
-                  <td>{item?.bidPrice}</td>
-                  <td>{item?.askPrice}</td>
-                  <td>{item?.askQty}</td>
+                  <td>{numberWithCommas(item?.lastTradedPrice)}</td>
+                  <td>{numberWithCommas(item?.iv ? item.iv : 0)}</td>
+                  <td>{numberWithCommas(item.volume)}</td>
+                  <td>{numberWithCommas(chngInOI)}</td>
+                  <td>{numberWithCommas(item?.openInterest)}</td>
                 </tr>
               );
             })}
