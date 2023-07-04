@@ -90,8 +90,7 @@ If you have any feedback, please reach out to us at aryan.parekh@somaiya.edu
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
+![Screen](https://github.com/Edelweiss-Hackathon/Option-Chain-Tool/blob/master/resources/Screen1.PNG)
 ## Demo
 
 Insert gif or link to demo
