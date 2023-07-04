@@ -73,7 +73,7 @@ Run the JAR file
 ```bash
   cd ../resources
 ```
-
+Unzip database.zip file before running the following command
 ```bash
   java -Ddebug=true -Dspeed=2.0 -classpath feed-play-1.0.jar hackathon.player.Main dataset.csv 9011
 ```
