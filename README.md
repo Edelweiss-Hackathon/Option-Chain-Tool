@@ -81,8 +81,10 @@ Unzip database.zip file before running the following command
 
 - [@Aryan Parekh](https://github.com/Aryan-29)
 - [@Bhavya Sura](https://github.com/Baboon12)
+- [@Hardik Panchal](https://github.com/Hardik-90)
 - [@Krish Panchal](https://github.com/Krishpanchal)
 - [@Manav Rupani](https://github.com/ManavStud)
+
 
 ## Feedback
 
